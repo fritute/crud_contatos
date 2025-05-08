@@ -1,6 +1,6 @@
 'use strict'
 
-import { getContatos } from './contato.js'
+import { getContatos, getContatosPorNome } from './contato.js'
 
 function criarCard(contato){
     const container = document.getElementById('container')
@@ -19,4 +19,29 @@ async function exibirContatos(){
     contatos.forEach(criarCard)
 } 
 
+ async function exibirPesquisa(evento){
+    if(evento.key == 'Enter'){
+       const contatos = await getContatosPorNome(evento.target.value)
+       container.replaceChildren()
+       contatos.forEach(criarCard)
+    }
+}
+function cadastroContato(){
+    document.querySelector('main').className = 'form-show'
+}
+function voltarHome(){
+    document.querySelector('main').className = 'card-show'
+}
 exibirContatos()
+
+document.getElementById('pesquisar')
+document.addEventListener('keydown', exibirPesquisa);
+
+document.getElementById('novo-contato')
+        .addEventListener('click', cadastroContato)
+
+document.getElementById('cancelar')
+        .addEventListener('click', voltarHome)
+
+document.getElementById('salvar')
+        .addEventListener('click', salvarContato)
