@@ -1,6 +1,18 @@
 'use strict'
 
-import { getContatos, getContatosPorNome, postContato } from "./contato.js"
+import { getContatos, getContatosPorNome, postContato } from "./contato.js";
+import { uploadImageToAzure } from "./uploadImageToAzure.js"; // Corrigido para importar do arquivo correto
+
+async function handleUploadImage() {
+    const uploadParams = {
+        file: document.getElementById('foto').files[0],
+        storageAccount: 'tutorialuploadzumba',
+        sasToken: 'sp=racwl&st=2025-05-15T12:21:08Z&se=2025-05-15T20:21:08Z&sv=2024-11-04&sr=c&sig=lHuCrChE1JDhVmqID7gmqPPl1AJR8mlOd8zLpRk5Yqk%3D',
+        containerName: 'fotos',
+    };
+
+    await uploadImageToAzure(uploadParams);
+}
 
 function criarCard (contato) {
     const container = document.getElementById('container')
